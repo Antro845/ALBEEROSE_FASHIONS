@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static  %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product details</title>
+    <link href="{% static 'img/favicon.png' %}" rel="icon">
+    <link href="{% static 'img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+    <link href="{% static 'vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  <style>
+   .add-to-cart {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #dc3545;
+  color: #fff;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.add-to-cart:hover {
+  background-color: #c82333;
+}
+
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="card">
+      <div class="row g-0">
+
+        <!-- Product Image -->
+        <div class="col-md-6">
+          <div class="preview-pic p-4 text-center">
+            <img src="{{ product.img.url }}" alt="{{ product.name }}" class="img-fluid rounded">
+          </div>
+        </div>
+
+        <!-- Product Details -->
+        <div class="col-md-6">
+          <div class="card-body">
+            <h3 class="product-title">{{ product.name }}</h3>
+            <p class="product-description">{{ product.desc }}</p>
+            <h4 class="price">Current Price: <span>Rs. {{ product.price }}</span></h4>
+
+            <div class="mt-4">
+              <a href="{% url 'add_to_cart' product.pk %}" class="btn btn-danger">
+                🛒 Add to Cart
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

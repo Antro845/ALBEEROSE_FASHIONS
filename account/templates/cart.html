@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Your Cart</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .cart-item { margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+    .cart-total { font-size: 18px; margin-top: 20px; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <h1>Your Shopping Cart</h1>
+{% load custom_filters %}
+ {% for item in cart_items %}
+  <div class="cart-item" style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 15px;">
+    
+    <!-- Product Image -->
+    <div>
+      <img src="{{ item.product.img.url }}" alt="{{ item.product.name }}" style="width: 100px; height: auto; border-radius: 8px;">
+    </div>
+
+    <!-- Product Details -->
+    <div style="flex: 1;">
+      <strong>{{ item.product.name }}</strong><br>
+      ₹{{ item.product.price }} × 
+      <form method="POST" action="{% url 'update_cart' item.id %}" style="display:inline;">
+        {% csrf_token %}
+        <input type="number" name="quantity" value="{{ item.quantity }}" min="1" style="width: 50px;">
+        <button type="submit">Update</button>
+      </form>
+      <br>
+      Subtotal: ₹{{ item.quantity|multiply:item.product.price }}<br>
+      <a href="{% url 'remove_from_cart' item.id %}" onclick="return confirm('Remove this item?')">🗑 Remove</a>
+    </div>
+
+  </div>
+{% endfor %}
+
+<div class="cart-total">
+  <h3>Total: ₹{{ total }}</h3>
+</div>
+
+<a href="{% url 'checkout' %}" class="btn btn-success">Proceed to Checkout</a>
